@@ -23,7 +23,9 @@ app.engine(
 );
 
 app.get("/", async (req, res) => {
-  res.render("main");
+  res.status(200);
+  res.send(res.render("main"));
+
 });
 
 app.get("/api/screeningtime", async (req, res) => {
