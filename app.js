@@ -114,34 +114,44 @@ app.use("/404", async (req, res) => {
 app.use("/", express.static("./public"));
 
 
-"use strict";
+var http = require('http').Server(app);
 
-const fs = require('fs');
-const path = require('path');
-const http = require('http');
-const staticBasePath = './';
-const PORT = process.env.PORT || 5080;
+// set up handlebars view engine
+var handlebars = require('express3-handlebars')
+  .create({ defaultLayout:'main' });
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
 
-const staticServe = function (req, res) {
-    let resolvedBase = path.resolve(staticBasePath);
-    let safeSuffix = path.normalize(req.url).replace(/^(\.\.[\/\\])+/, '');
-    let fileLoc = path.join(resolvedBase, safeSuffix);
-    fs.readFile(fileLoc, function (err, data) {
-        if (err) {
-            res.writeHead(404, 'Not Found');
-            res.write('404: File Not Found!');
-            return res.end();
-        }
-    res.statusCode = 200;
-    res.write(data);
-    return res.end();
-    });
-};
+http.listen(process.env.PORT || 5080, function(){
+  console.log('listening on', http.address().port);
+})
 
-const httpServer = http.createServer(staticServe);
+// Home Page
+app.get('/', function(req, res){
+  res.render('home');
+});
 
-httpServer.listen(PORT, () => {
-    console.log("server listening on port " + PORT);
+// About Page
+app.get('/about', function(req, res){
+  res.render('about');
+});
+
+// 404 catch-all handler (middleware)
+app.use(function(req, res){
+  res.status(404);
+  res.render('404');
+});
+
+// 500 error handler (middleware)
+app.use(function(req, res){
+  console.error(err.stack);
+  res.status(500);
+  res.render('500');
+});
+
+app.listen(app.get('port'), function(){
+console.log( 'Express started on http://localhost:' +
+app.get('port') + '; press Ctrl-C to terminate.' );
 });
 
 
