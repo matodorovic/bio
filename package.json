@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/emmaambr/Kino-BE#readme",
   "dependencies": {
+    "cool-ascii-faces": "^1.3.4",
     "express": "^4.17.2",
     "express-handlebars": "^6.0.2",
     "handlebars": "^4.7.7",
+    "markdown": "^0.5.0",
     "marked": "^4.0.10",
     "moment": "^2.29.1",
     "node-fetch": "^3.2.0",
