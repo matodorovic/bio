@@ -8,7 +8,7 @@
     "dev": "nodemon .",
     "start": "node .",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "build": "node-sass --watch src/css/main.scss public/main.css"
+    "sass": "node-sass --watch src/css/main.scss public/main.css"
   },
   "repository": {
     "type": "git",
