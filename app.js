@@ -7,6 +7,7 @@ import { loadReviews } from "./src/script/apiLoader.js";
 import { getScreenings, getScreeningsMovie } from "./src/script/loadScreening.js";
 import api from "./src/script/apiLoader.js";
 import reviews from "./src/script/loadReviews.js";
+import handlebars from "express-handlebars";
 
 const app = express();
 
@@ -14,13 +15,15 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 app.engine(
   "handlebars",
-  engine({
+  engine({ 
     defaultLayout: "index",
     helpers: {
       markdown: (md) => marked(md),
     },
   })
 );
+
+handlebars.create({ defaultLayout:'index' });
 
 app.get("/", async (req, res) => {
   res.status(200);
